@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" ng-app="wowProfessionHelper">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Favicon - icon that appears in browser tabs -->
+  <!--<link rel="shortcut icon" type="image/x-icon" href="../images/favicons/favicon.ico" /> -->
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href=../css/animate.css> <link rel="stylesheet" href=../css/basic_style.css> <link rel="stylesheet" href=../css/jumbotron.css> <link rel="stylesheet" href=../css/search.css>
+  <title>WoW Profession Helper </title>
+
+</head>
+
+<body>
+  <div class="jumbotron" ng-controller="JumbotronController">
+    <div class="container select-buttons">
+      <button type="button" class="btn btn-primary" onclick="goToHome()">Home</button>
+      <button type="button" class="btn btn-primary" onclick="goToSearch()">Search</button>
+      <button type="button" class="btn btn-primary" onclick="goToProfessions()">Professions</button>
+      <button type="button" class="btn btn-primary" onclick="goToAbout()">About</button>
+    </div>
+    <p class="wowTokenTag">WoW Token Price: <span ng-bind="wowTokenPrice"></span></p>
+  </div>
+
+  <div ng-view> </div>
+
+  <script type="text/ng-template" id="home.htm">
+
+  </script>
+
+  <script type="text/ng-template" id="search.htm">
+    <div class="search-input-container">
+      <div class="region-select">
+        Select Region:
+        <select ng-model="regionName">
+          <option value="regionUS">US</option>
+          <option value="regionEU">EU</option>
+        </select>
+      </div>
+    <div class="realm-select">
+       Select Realm:
+       <select ng-model="realmName">
+         <option value="bleedingHollowUS">Bleeding Hollow</option>
+         <option value="aeriePeakUS">AeriePeak</option>
+         <option value="IllidanUS">Illidan</option>
+         <option value="TichondriusUS">Tichondrius</option>
+       </select>
+    </div>
+
+    <div class="item-name-input">
+      <p>Item Name: <input type="text" ng-model="itemName"></p>
+    </div>
+
+    <div class="number-of-results-in">
+      Results displayed:
+      <select ng-model="numOfResults">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="all">All</option>
+      </select>
+    </div>
+
+      <button class="searchButton" ng-click="enterSearchParams()">Search!</button>
+  </div>
+
+
+  <div ng-show="showLoadingSpinner" class="loading-spinner-holder" data-loading ><div class="loading-spinner"><img src="../images/Spinner-1s-200px.gif" /></div></div>
+      <div ng-show="showResults">
+      <h6 class=resultsHeaderContainer>
+        <div id="sellerHeader">Seller</div>
+        <div id="stackSizeHeader">Stack Size</div>
+        <div id="stackPriceHeader">Price Header</div>
+        <div id="ppuHeader">Price per Unit</div>
+      </h6>
+      <ul class="searchOutputList" style="color:DodgerBlue;" >
+        <li ng-repeat="x in searchResults | orderBy: 'ppu'" >
+            <div class="searchResultContainer">
+               <div id="sellerResult">{{x.seller}}</div>
+               <div id="stackSizeResult">{{x.stackSize}}</div>
+               <div id="stackPriceResult">{{x.stackPrice}}g</div>
+               <div id="ppuResult">{{x.ppu}}g</div>
+           </div>
+          </li>
+        </ul>
+      </div>
+
+      <div style="padding-left: 10px;"ng-show="showNoResults">No Results Found</div>
+  </script>
+
+  <script type="text/ng-template" id="professions.htm">
+    <div class="flex-container professionsCont">
+      Select Profession:
+      <select style="color:DodgerBlue;" ng-model="professionName">
+        <option value="alchemy">Alchemy</option>
+        <option value="blacksmithing">Blacksmithing</option>
+        <option value="clothworkinkg">Clothworking</option>
+        <option value="enchanting">Enchanting</option>
+        <option value="engineering">Engineering</option>
+        <option value="incription">Incsription</option>
+        <option value="jewelcrafting">Jewelcrafting</option>
+        <option value="leatherworking">Leatherworking</option>
+      </select>
+
+
+
+
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="about.htm">
+    <div class="flex-container aboutCont">
+
+    </div>
+  </script>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="../app/angular.min.js"></script>
+  <script src="../app/angular-route.min.js"></script>
+  <script src="../app/angular-animate.min.js"></script>
+  <script src="../app/relocate.js"></script>
+  <script src="../app/app.js"></script>
+  <script src="../app/homeController.js"></script>
+  <script src="../app/searchController.js"></script>
+  <script src="../app/professionsController.js"></script>
+  <script src="../app/aboutController.js"></script>
+  <script src="../app/jumbotronController.js"></script>
+  <script src="../app/frontEndData.js"></script>
+  <script src="../app/auctionDataManager.js"></script>
+  <script src="../app/itemList.js"></script>
+  <script src="../app/serviceInterface.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>
